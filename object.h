@@ -11,7 +11,7 @@ struct object_array {
 	unsigned int alloc;
 	struct object_array_entry {
 		struct object *item;
-		const char *name;
+		char *name;
 		unsigned mode, flags;
 	} *objects;
 };

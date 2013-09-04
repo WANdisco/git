@@ -353,6 +353,7 @@ GIT-VERSION-FILE: FORCE
 # CFLAGS and LDFLAGS are for the users to override from the command line.
 
 CFLAGS = -g -O2 -Wall -Werror \
+	-Wno-format-zero-length \
 	-Wno-pointer-to-int-cast \
 	-Wold-style-definition \
 	-Wdeclaration-after-statement

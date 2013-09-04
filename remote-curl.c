@@ -866,7 +866,7 @@ static void parse_push(struct strbuf *buf)
 	free(specs);
 }
 
-int main(int argc, const char **argv)
+int main(int argc, char **argv)
 {
 	struct strbuf buf = STRBUF_INIT;
 	int nongit;

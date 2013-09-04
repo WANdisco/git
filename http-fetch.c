@@ -6,7 +6,7 @@
 static const char http_fetch_usage[] = "git http-fetch "
 "[-c] [-t] [-a] [-v] [--recover] [-w ref] [--stdin] commit-id url";
 
-int main(int argc, const char **argv)
+int main(int argc, char **argv)
 {
 	struct walker *walker;
 	int commits_on_stdin = 0;
@@ -38,7 +38,7 @@ int main(int argc, const char **argv)
 		} else if (argv[arg][1] == 'v') {
 			get_verbosely = 1;
 		} else if (argv[arg][1] == 'w') {
-			write_ref = &argv[arg + 1];
+			write_ref = (const char **) &argv[arg + 1];
 			arg++;
 		} else if (argv[arg][1] == 'h') {
 			usage(http_fetch_usage);
