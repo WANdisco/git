@@ -85,10 +85,8 @@
 #define _NETBSD_SOURCE 1
 #define _SGI_SOURCE 1
 
-#if defined(WIN32) && !defined(__CYGWIN__) /* Both MinGW and MSVC */
-# if defined (_MSC_VER)
-#  define _WIN32_WINNT 0x0502
-# endif
+#ifdef WIN32 /* Both MinGW and MSVC */
+#define _WIN32_WINNT 0x0502
 #define WIN32_LEAN_AND_MEAN  /* stops windows.h including winsock.h */
 #include <winsock2.h>
 #include <windows.h>
@@ -273,6 +271,10 @@ extern char *gitbasename(char *);
 
 #ifndef has_dos_drive_prefix
 #define has_dos_drive_prefix(path) 0
+#endif
+
+#ifndef offset_1st_component
+#define offset_1st_component(path) (is_dir_sep((path)[0]))
 #endif
 
 #ifndef is_dir_sep
@@ -713,5 +715,13 @@ void warn_on_inaccessible(const char *path);
 
 /* Get the passwd entry for the UID of the current process. */
 struct passwd *xgetpwuid_self(void);
+
+#ifndef mark_as_git_dir
+#define mark_as_git_dir(x) /* noop */
+#endif
+
+#ifndef get_home_directory
+#define get_home_directory() getenv("HOME")
+#endif
 
 #endif

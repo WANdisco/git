@@ -62,7 +62,9 @@ GIT_QUIET=
 say () {
 	if test -z "$GIT_QUIET"
 	then
-		printf '%s\n' "$*"
+		cat <<EOF
+$*
+EOF
 	fi
 }
 
@@ -272,10 +274,8 @@ case $(uname -s) in
 	find () {
 		/usr/bin/find "$@"
 	}
-	# git sees Windows-style pwd
-	pwd () {
-		builtin pwd -W
-	}
+	# Let pwd always return the uniqe real windows path
+	alias pwd='pwd -W'
 	is_absolute_path () {
 		case "$1" in
 		[/\\]* | [A-Za-z]:*)

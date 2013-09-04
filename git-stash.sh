@@ -262,8 +262,13 @@ save_stash () {
 		clear_stash || die "$(gettext "Cannot initialize stash")"
 
 	create_stash "$stash_msg" $untracked
-	store_stash -m "$stash_msg" -q $w_commit ||
-	die "$(gettext "Cannot save the current status")"
+
+	# Make sure the reflog for stash is kept.
+	mkdir -p "$GIT_DIR/logs/${ref_stash%/*}"
+	: >>"$GIT_DIR/logs/$ref_stash"
+
+	git update-ref -m "$stash_msg" $ref_stash $w_commit ||
+		die "$(gettext "Cannot save the current status")"
 	say Saved working directory and index state "$stash_msg"
 
 	if test -z "$patch_mode"
